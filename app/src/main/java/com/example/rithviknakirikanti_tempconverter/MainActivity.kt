@@ -1,84 +1,78 @@
 package com.example.rithviknakirikanti_tempconverter
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
-import kotlinx.coroutines.awaitCancellation
-import kotlin.math.ceil
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //declare the seekbars and output textView
-        val celsiusSeekBar:SeekBar = findViewById(R.id.seekBarCelsius)
-        val fahrenheitSeekBar:SeekBar = findViewById(R.id.seekBarFahrenheit)
-        val celsiusOutput:TextView = findViewById(R.id.celsiusOutput)
-        val fahrenheitOutput:TextView = findViewById(R.id.fahrenehitOutput)
+        // Declare the seekbars and output textView
+        val celsiusSeekBar: SeekBar = findViewById(R.id.seekBarCelsius)
+        val fahrenheitSeekBar: SeekBar = findViewById(R.id.seekBarFahrenheit)
+        val celsiusOutput: TextView = findViewById(R.id.celsiusOutput)
+        val fahrenheitOutput: TextView = findViewById(R.id.fahrenehitOutput)
 
-        //set initial values for seekbar and output
+        // Set initial values for seekbar and output
         celsiusSeekBar.progress = 0
-        celsiusOutput.setText("0")
+        celsiusOutput.text = "0"
 
         fahrenheitSeekBar.progress = 32
-        fahrenheitOutput.setText("32")
+        fahrenheitOutput.text = "32"
 
+        celsiusSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    // Update Celsius output
+                    celsiusOutput.text = progress.toString()
 
-
-        celsiusSeekBar.setOnSeekBarChangeListener(object:
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int,
-                                           fromUser: Boolean) {
-
-                //set progress of seekbar to the output
-                celsiusOutput.setText(celsiusSeekBar.progress.toString())
-
-                //update fahrenheit seekbar
-                var fahrenheitConversion: Double = (9.0/5.0 * celsiusSeekBar.progress) + 32
-                fahrenheitSeekBar.progress = ceil(fahrenheitConversion).toInt()
-                fahrenheitOutput.setText(fahrenheitSeekBar.progress.toString())
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-
-            }
-
-        })
-
-        fahrenheitSeekBar.setOnSeekBarChangeListener(object:
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int,
-                                           fromUser: Boolean) {
-
-                //set progress of seekbar to the output
-                fahrenheitOutput.setText(fahrenheitSeekBar.progress.toString())
-
-                //update celsius seekbar
-                var celsiusConversion: Double = (fahrenheitSeekBar.progress - 32) * 5.0/9.0
-                celsiusSeekBar.progress = ceil(celsiusConversion).toInt()
-                celsiusOutput.setText(celsiusSeekBar.progress.toString())
-
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                //snap back if fahrenheit < 32
-                if(fahrenheitSeekBar.progress < 32) {
-                    fahrenheitSeekBar.progress = 32
+                    // Calculate and update Fahrenheit seekbar and output
+                    val fahrenheitConversion: Int = Math.round((9.0 / 5.0 * progress) + 32).toInt()
+                    if (fahrenheitSeekBar.progress != fahrenheitConversion) {
+                        fahrenheitSeekBar.progress = fahrenheitConversion
+                        fahrenheitOutput.text = fahrenheitConversion.toString()
+                    }
                 }
             }
 
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
+        fahrenheitSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (fromUser) {
+                    // Update Fahrenheit output
+                    fahrenheitOutput.text = progress.toString()
+
+                    //only run this code if progress > 32
+                    if(progress > 32) {
+                        // Calculate and update Celsius seekbar and output
+                        val celsiusConversion: Int = Math.round((progress - 32) * 5.0 / 9.0).toInt()
+                        if (celsiusSeekBar.progress != celsiusConversion) {
+                            celsiusSeekBar.progress = celsiusConversion
+                            celsiusOutput.text = celsiusConversion.toString()
+                        }
+                    }
+                    else {
+                        celsiusSeekBar.progress = 0
+                        celsiusOutput.setText("0")
+                    }
+                }
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // Snap back if Fahrenheit < 32
+                if (fahrenheitSeekBar.progress < 32) {
+                    fahrenheitSeekBar.progress = 32
+                    fahrenheitOutput.text = "32"
+                }
+            }
         })
     }
 }
