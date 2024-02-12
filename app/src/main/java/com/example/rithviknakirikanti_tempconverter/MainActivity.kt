@@ -6,6 +6,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.coroutines.awaitCancellation
+import kotlin.math.ceil
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +19,14 @@ class MainActivity : AppCompatActivity() {
         val celsiusOutput:TextView = findViewById(R.id.celsiusOutput)
         val fahrenheitOutput:TextView = findViewById(R.id.fahrenehitOutput)
 
+        //set initial values for seekbar and output
+        celsiusSeekBar.progress = 0
+        celsiusOutput.setText("0")
+
+        fahrenheitSeekBar.progress = 32
+        fahrenheitOutput.setText("32")
+
+
 
         celsiusSeekBar.setOnSeekBarChangeListener(object:
             SeekBar.OnSeekBarChangeListener {
@@ -29,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 
                 //update fahrenheit seekbar
                 var fahrenheitConversion: Double = (9.0/5.0 * celsiusSeekBar.progress) + 32
-                fahrenheitSeekBar.progress = fahrenheitConversion.toInt()
-                fahrenheitOutput.setText(String.format("%.2f", fahrenheitConversion))
+                fahrenheitSeekBar.progress = ceil(fahrenheitConversion).toInt()
+                fahrenheitOutput.setText(fahrenheitSeekBar.progress.toString())
 
             }
 
@@ -54,12 +63,8 @@ class MainActivity : AppCompatActivity() {
 
                 //update celsius seekbar
                 var celsiusConversion: Double = (fahrenheitSeekBar.progress - 32) * 5.0/9.0
-                celsiusSeekBar.progress = celsiusConversion.toInt()
-                celsiusOutput.setText(String.format("%.2f", celsiusConversion))
-
-
-
-
+                celsiusSeekBar.progress = ceil(celsiusConversion).toInt()
+                celsiusOutput.setText(celsiusSeekBar.progress.toString())
 
             }
 
@@ -68,7 +73,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-
+                //snap back if fahrenheit < 32
+                if(fahrenheitSeekBar.progress < 32) {
+                    fahrenheitSeekBar.progress = 32
+                }
             }
 
         })

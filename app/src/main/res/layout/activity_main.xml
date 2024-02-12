@@ -28,7 +28,6 @@
             android:id="@+id/seekBarCelsius"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:min="0"
             android:max="100"
             app:layout_constraintTop_toBottomOf="@id/celsiusLabel"
             app:layout_constraintBottom_toBottomOf="@id/celsiusLayout"/>
@@ -37,7 +36,6 @@
             android:id="@+id/celsiusOutput"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="ooo"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="@id/celsiusLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +68,6 @@
             android:id="@+id/seekBarFahrenheit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:min="0"
             android:max="212"
             app:layout_constraintTop_toBottomOf="@id/fahrenheitLabel"
             app:layout_constraintBottom_toBottomOf="@id/fahrenheitLayout"/>
@@ -79,7 +76,6 @@
             android:id="@+id/fahrenehitOutput"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="ooo"
             android:textSize="50sp"
             app:layout_constraintBottom_toBottomOf="@id/fahrenheitLayout"
             app:layout_constraintEnd_toEndOf="parent"
