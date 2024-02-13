@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:max="100"
             app:layout_constraintTop_toBottomOf="@id/celsiusLabel"
-            app:layout_constraintBottom_toBottomOf="@id/celsiusLayout"/>
+            app:layout_constraintBottom_toBottomOf="@id/celsiusLayout"
+            app:layout_constraintVertical_bias="0.343"/>
 
         <TextView
             android:id="@+id/celsiusOutput"
@@ -60,7 +61,7 @@
             android:layout_height="0dp"
             android:text="@string/fahrenheit"
             android:textSize="50sp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,8 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="212"
+            app:layout_constraintBottom_toBottomOf="@id/fahrenheitLayout"
             app:layout_constraintTop_toBottomOf="@id/fahrenheitLabel"
-            app:layout_constraintBottom_toBottomOf="@id/fahrenheitLayout"/>
+            app:layout_constraintVertical_bias="0.343" />
 
         <TextView
             android:id="@+id/fahrenehitOutput"
@@ -81,6 +83,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/seekBarFahrenheit" />
+
+        <TextView
+            android:id="@+id/interestingMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Hello"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@+id/fahrenehitOutput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seekBarFahrenheit"
+            app:layout_constraintVertical_bias="0.807" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

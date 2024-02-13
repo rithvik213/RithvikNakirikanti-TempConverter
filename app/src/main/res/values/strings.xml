@@ -2,4 +2,6 @@
     <string name="app_name">RithvikNakirikanti-TempConverter</string>
     <string name="fahrenheit">Fahrenheit</string>
     <string name="celsius">Celsius</string>
+    <string name="colder_message">I wish it were colder</string>
+    <string name="warmer_message">I wish it were warmer</string>
 </resources>

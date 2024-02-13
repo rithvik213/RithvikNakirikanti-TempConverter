@@ -3,6 +3,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,19 +15,32 @@ class MainActivity : AppCompatActivity() {
         val fahrenheitSeekBar: SeekBar = findViewById(R.id.seekBarFahrenheit)
         val celsiusOutput: TextView = findViewById(R.id.celsiusOutput)
         val fahrenheitOutput: TextView = findViewById(R.id.fahrenehitOutput)
+        val interestingMessage: TextView = findViewById(R.id.interestingMessage)
 
         // Set initial values for seekbar and output
         celsiusSeekBar.progress = 0
-        celsiusOutput.text = "0"
+        celsiusOutput.text = String.format("%d", 0)
 
         fahrenheitSeekBar.progress = 32
-        fahrenheitOutput.text = "32"
+        fahrenheitOutput.text = String.format("%d", 32)
+
+        //set initial text message
+        interestingMessage.setText(R.string.warmer_message)
 
         celsiusSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
                     // Update Celsius output
                     celsiusOutput.text = progress.toString()
+
+                    //update interesting message
+                    if(progress <= 20) {
+                        interestingMessage.setText(R.string.warmer_message)
+                    }
+                    else {
+                        interestingMessage.setText(R.string.colder_message)
+
+                    }
 
                     // Calculate and update Fahrenheit seekbar and output
                     val fahrenheitConversion: Int = Math.round((9.0 / 5.0 * progress) + 32).toInt()
@@ -55,6 +69,15 @@ class MainActivity : AppCompatActivity() {
                         if (celsiusSeekBar.progress != celsiusConversion) {
                             celsiusSeekBar.progress = celsiusConversion
                             celsiusOutput.text = celsiusConversion.toString()
+                        }
+
+                        //update interesting message
+                        if(celsiusSeekBar.progress <= 20) {
+                            interestingMessage.setText(R.string.warmer_message)
+                        }
+                        else {
+                            interestingMessage.setText(R.string.colder_message)
+
                         }
                     }
                     else {
